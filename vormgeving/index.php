@@ -21,9 +21,10 @@ try {
     $sql = "SELECT * FROM characters";
     $stmt = $conn->query($sql);
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
+    $row_amount = 0;
     if ($result) {
         foreach ($result as $row) {
+            $row_amount ++;
             $id = $row["id"];
             $name = $row["name"];
             $avatar = $row["avatar"];
@@ -40,15 +41,15 @@ try {
                 <div id="container">
                     <a class="item" href="character.php">
                         <div class="left">
-                            <img class="avatar" src="resources/images/bowser.jpg">
+                            <img class="avatar" src="resources/images/<?php echo $avatar ?>" alt= "Afbeelding">
                         </div>
                         <div class="right">
                             <h2><?php echo $name ?></h2>
                             <div class="stats">
                                 <ul class="fa-ul">
-                                    <li><span class="fa-li"><i class="fas fa-heart"></i></span> <?php echo $defense ?></li>
-                                    <li><span class="fa-li"><i class="fas fa-fist-raised"></i></span> <?php echo $weapon ?></li>
-                                    <li><span class="fa-li"><i class="fas fa-shield-alt"></i></span> <?php echo $armor ?></li>
+                                    <li><span class="fa-li"><i class="fas fa-heart"></i></span> <?php echo $health ?></li>
+                                    <li><span class="fa-li"><i class="fas fa-fist-raised"></i></span> <?php echo $attack ?></li>
+                                    <li><span class="fa-li"><i class="fas fa-shield-alt"></i></span> <?php echo $defense ?></li>
                                 </ul>
                             </div>
                         </div>
@@ -65,8 +66,7 @@ try {
     die("Fout bij het verbinden met de database: " . $e->getMessage());
 }
 ?>
-<header><h1>Alle [X] characters uit de database</h1>
-    <h1><?php echo "Test" ?></h1>
+<header><h1>Alle <?php echo $row_amount ?> characters uit de database</h1>
 </header>
 
 
