@@ -7,20 +7,8 @@
     <link href="resources/css/style.css" rel="stylesheet"/>
 </head>
 <body>
-<?php
-$servername = "localhost";
-$username = "root";
-$password = "mysql";
-$database = "characters";
-
-try {
-    $conn = new PDO("mysql:host=$servername;dbname=$database;charset=utf8mb4", $username, $password);
-    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    echo "Verbinding met de database is succesvol tot stand gebracht.";
-
-    $sql = "SELECT * FROM characters";
-    $stmt = $conn->query($sql);
-    $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+<?php 
+    include "config.php"; 
     $row_amount = 0;
     if ($result) {
         foreach ($result as $row) {
@@ -36,36 +24,37 @@ try {
             $weapon = $row["weapon"];
             $armor = $row["armor"];
 
-            //if ($file_name == $name) {
-                ?>
-                <div id="container">
-                    <a class="item" href="character.php">
-                        <div class="left">
-                            <img class="avatar" src="resources/images/<?php echo $avatar ?>" alt= "Afbeelding">
-                        </div>
-                        <div class="right">
-                            <h2><?php echo $name ?></h2>
-                            <div class="stats">
-                                <ul class="fa-ul">
-                                    <li><span class="fa-li"><i class="fas fa-heart"></i></span> <?php echo $health ?></li>
-                                    <li><span class="fa-li"><i class="fas fa-fist-raised"></i></span> <?php echo $attack ?></li>
-                                    <li><span class="fa-li"><i class="fas fa-shield-alt"></i></span> <?php echo $defense ?></li>
-                                </ul>
-                            </div>
-                        </div>
-                    <div class="detailButton"><i class="fas fa-search"></i> bekijk</div>
-                    </a>
+        
+    ?>
+
+<div id="container">
+    <form method="post" action="other-page.php">
+        <input type="hidden" name="character_name" value="<?php echo $name; ?>">
+        <a class="item" href="character.php">
+            <div class="left">
+                <img class="avatar" src="resources/images/<?php echo $avatar ?>" alt="Afbeelding">
+            </div>
+            <div class="right">
+                <h2><?php echo $name ?></h2>
+                <div class="stats">
+                    <ul class="fa-ul">
+                        <li><span class="fa-li"><i class="fas fa-heart"></i></span> <?php echo $health ?></li>
+                        <li><span class="fa-li"><i class="fas fa-fist-raised"></i></span> <?php echo $attack ?></li>
+                        <li><span class="fa-li"><i class="fas fa-shield-alt"></i></span> <?php echo $defense ?></li>
+                    </ul>
                 </div>
-                <?php
-            }
-        }
-     else {
-        echo "Geen resultaten gevonden.";
+            </div>
+            <div class="detailButton"><i class="fas fa-search"></i> bekijk</div>
+        </a>
+        <button type="submit" class="hiddenSubmit"></button>
+    </form>
+</div>
+    <?php 
     }
-} catch (PDOException $e) {
-    die("Fout bij het verbinden met de database: " . $e->getMessage());
-}
-?>
+    }else {
+        echo "Geen resultaten gevonden.";
+        }
+    ?>
 <header><h1>Alle <?php echo $row_amount ?> characters uit de database</h1>
 </header>
 

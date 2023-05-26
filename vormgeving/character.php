@@ -7,7 +7,14 @@
     <link href="resources/css/style.css" rel="stylesheet"/>
 </head>
 <body>
-<header><h1>Bowser</h1>
+    <?php if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $characterName = $_POST["character_name"];
+
+    
+    }
+    echo $characterName;
+    ?>
+
     <a class="backbutton" href="index.html"><i class="fas fa-long-arrow-alt-left"></i> Terug</a></header>
 <div id="container">
     <div class="detail">
