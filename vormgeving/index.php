@@ -8,7 +8,25 @@
 </head>
 <body>
 <?php 
-    include "config.php"; 
+    //include "config.php"; 
+    $servername = "localhost";
+    $username = "root";
+    $password = "mysql";
+    $database = "characters";
+
+    try {
+        $conn = new PDO("mysql:host=$servername;dbname=$database;charset=utf8mb4", $username, $password);
+        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        echo "Verbinding met de database is succesvol tot stand gebracht.";
+
+        $sql = "SELECT * FROM characters";
+        $stmt = $conn->query($sql);
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    
+        } catch (PDOException $e) {
+            die("Fout bij het verbinden met de database: " . $e->getMessage());
+        }
+
     $row_amount = 0;
     if ($result) {
         foreach ($result as $row) {
@@ -28,9 +46,8 @@
     ?>
 
 <div id="container">
-    <form method="post" action="other-page.php">
         <input type="hidden" name="character_name" value="<?php echo $name; ?>">
-        <a class="item" href="character.php">
+        <a class="item" href="character.php?id=<?php echo $id; ?>">
             <div class="left">
                 <img class="avatar" src="resources/images/<?php echo $avatar ?>" alt="Afbeelding">
             </div>
@@ -46,8 +63,6 @@
             </div>
             <div class="detailButton"><i class="fas fa-search"></i> bekijk</div>
         </a>
-        <button type="submit" class="hiddenSubmit"></button>
-    </form>
 </div>
     <?php 
     }
